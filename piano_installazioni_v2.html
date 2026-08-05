@@ -29,6 +29,14 @@
   .card .lab{font-size:12px;color:var(--nk-grey);margin-top:4px}
 
 
+  .months{margin:24px 0 8px}
+  .months h2{font-size:14px;font-weight:700;color:var(--nk-blue);margin-bottom:11px}
+  .mbar-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .mbar-lab{width:120px;font-size:13px;color:var(--nk-grey);flex-shrink:0}
+  .mbar-track{flex:1;background:var(--nk-bg-soft);border-radius:2px;height:19px}
+  .mbar-fill{height:100%;background:var(--nk-blue);border-radius:2px;min-width:2px}
+  .mbar-val{width:96px;font-size:13px;color:#333;flex-shrink:0}
+  .mbar-val b{color:var(--nk-blue)}
   .controls{display:flex;flex-wrap:wrap;gap:9px;align-items:center;
     padding:20px 0 14px;border-top:1px solid var(--nk-silver);margin-top:24px}
   .toggle{display:flex;border:1px solid var(--nk-blue);border-radius:3px;overflow:hidden}
@@ -146,6 +154,11 @@
     <div class="card"><div class="num" id="k-gg">—</div><div class="lab">Giornate di lavoro</div></div>
   </div>
 
+  <div class="months">
+    <h2>Distribuzione mensile dei DAE</h2>
+    <div id="mbars"></div>
+  </div>
+
   <div class="controls">
     <div class="toggle">
       <button id="b-cal" class="active" onclick="setView('cal')">Calendario</button>
@@ -223,6 +236,17 @@ function initTop(){
   document.getElementById('k-dae').textContent=dae;
   document.getElementById('k-per').textContent=fmtD(ds[0]).slice(0,5)+' – '+fmtD(ds[ds.length-1]).slice(0,5);
   document.getElementById('k-gg').textContent=gg;
+
+  const per={};ROWS.forEach(r=>{const k=mKey(r.d);per[k]=(per[k]||0)+r.dae;});
+  const max=Math.max(...Object.values(per));
+  const mb=document.getElementById('mbars');
+  Object.keys(MESI).forEach(k=>{
+    const v=per[k];if(!v)return;
+    mb.insertAdjacentHTML('beforeend',
+      `<div class="mbar-row"><div class="mbar-lab">${MESI[k]}</div>
+       <div class="mbar-track"><div class="mbar-fill" style="width:${(v/max*100).toFixed(1)}%"></div></div>
+       <div class="mbar-val"><b>${v}</b> DAE</div></div>`);
+  });
 
   const add=(id,vals)=>{const s=document.getElementById(id);
     vals.forEach(v=>{const o=document.createElement('option');o.value=v[0];o.textContent=v[1];s.appendChild(o);});};
