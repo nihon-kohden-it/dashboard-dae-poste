@@ -21,6 +21,10 @@ button{cursor:pointer;font-family:inherit;}
 .badge-live{background:#E6F4EA;color:var(--green);border:1px solid #A8D5B5;}
 .badge-mock{background:var(--gray-100);color:var(--gray-500);border:1px solid var(--gray-200);}
 .header-date{font-size:10px;color:var(--gray-500);}
+.cal-btn{display:inline-flex;align-items:center;gap:6px;background:var(--nk-blue);color:#fff;font-size:12px;font-weight:700;padding:8px 14px;border-radius:8px;text-decoration:none;transition:background .15s;white-space:nowrap;box-shadow:0 2px 4px rgba(40,116,200,.25);}
+.cal-btn:hover{background:var(--nk-blue-dark);}
+.header-right-group{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+@media(max-width:600px){.cal-btn span.cal-txt{display:none;}}
 .main{padding:24px 28px;max-width:1400px;margin:0 auto;}
 .section-title{font-size:13px;font-weight:700;color:var(--nk-blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;margin-top:24px;padding-bottom:6px;border-bottom:2px solid var(--nk-blue-light);}
 .section-title:first-child{margin-top:0;}
@@ -93,9 +97,12 @@ button{cursor:pointer;font-family:inherit;}
     <div class="header-title">Dashboard Avanzamento Installazioni DAE</div>
     <div class="header-sub">Progetto Poste Italiane - Deadline 31/12/2026</div>
   </div>
-  <div class="header-right">
-    <span class="badge badge-mock" id="dataSource">Caricamento...</span>
-    <span class="header-date" id="lastUpdate"></span>
+  <div class="header-right" style="flex-direction:row;align-items:center;gap:16px;">
+    <a href="https://nihon-kohden-it.github.io/dashboard-dae-poste/piano_installazioni_v2.html" target="_blank" class="cal-btn" title="Apri il calendario delle installazioni">&#128197; <span class="cal-txt">Calendario installazioni</span></a>
+    <div class="header-right-group">
+      <span class="badge badge-mock" id="dataSource">Caricamento...</span>
+      <span class="header-date" id="lastUpdate"></span>
+    </div>
   </div>
 </header>
 <div class="main">
